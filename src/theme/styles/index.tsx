@@ -1,13 +1,15 @@
 import { StyleSheet } from 'react-native';
 
 export const globalStyles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    paddingVertical: 20,
-    paddingHorizontal: 30,
+  globalMargin: {
+    marginHorizontal: 20,
   },
-  text: {
-    fontFamily: 'Helvetica',
-    fontSize: 30,
+  pokeballBG: {
+    position: 'absolute',
+    width: 300,
+    height: 300,
+    top: -100,
+    right: -100,
+    opacity: 0.2,
   },
 });
