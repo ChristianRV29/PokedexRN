@@ -24,14 +24,23 @@ export const usePokemonPaginated = () => {
   };
 
   const handlePokemonData = (pokemonList: Result[]) => {
-    (pokemonList || []).forEach(poke => {
-      console.log('🐱 ~ Pokemon: ', poke.name);
+    const newPokemonList: SimplePokemon[] = pokemonList.map(({ name, url }) => {
+      const urlParts = url.split('/');
+      const id = urlParts[urlParts.length - 2];
+      const picture = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
+      return { id, name, picture };
     });
+
+    if (newPokemonList.length > 0) {
+      setSimplePokemonList([...simplePokemonList, ...newPokemonList]);
+    }
   };
 
   useEffect(() => {
     loadPokemons();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return {};
+  return { simplePokemonList };
 };
