@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Image, Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '~src/navigation/StackNavigator';
-import { Image, Text } from 'react-native';
 import { globalStyles } from '~src/theme/styles';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { usePokemonPaginated } from '~src/hooks/usePokemonPaginated';
 
 type HomeScreenProps = NativeStackNavigationProp<
   RootStackParamList,
@@ -12,6 +13,10 @@ type HomeScreenProps = NativeStackNavigationProp<
 >;
 
 const HomeScreen = () => {
+  const { simplePokemonList } = usePokemonPaginated();
+
+  console.log('📦🦊 ~ PokemonList: ', simplePokemonList);
+
   const { top } = useSafeAreaInsets();
   return (
     <>
