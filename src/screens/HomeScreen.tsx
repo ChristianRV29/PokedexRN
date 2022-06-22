@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text } from 'react-native';
+import { FlatList, Image, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -24,7 +24,11 @@ const HomeScreen = () => {
         source={require('~src/assets/pokebola.png')}
         style={globalStyles.pokeballBG}
       />
-      <Text style={{ ...globalStyles.title, top: top + 20 }}>Pokedex</Text>
+      <FlatList
+        data={simplePokemonList}
+        keyExtractor={pokemon => pokemon.id}
+        renderItem={({ item }) => <Text>{item.name}</Text>}
+      />
     </>
   );
 };
