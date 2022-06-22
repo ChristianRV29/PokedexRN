@@ -33,5 +33,5 @@ export const useAnimation = () => {
     }).start();
   };
 
-  return { fadeIn, fadeOut, startMovingPosition };
+  return { opacity, fadeIn, fadeOut, startMovingPosition };
 };
