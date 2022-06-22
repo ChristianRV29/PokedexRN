@@ -8,6 +8,7 @@ import {
 } from '~src/@types/interfaces/pokemon';
 
 export const usePokemonPaginated = () => {
+  const [isLoading, setIsLoading] = useState<Boolean>(false);
   const [simplePokemonList, setSimplePokemonList] = useState<SimplePokemon[]>(
     [],
   );
@@ -15,6 +16,7 @@ export const usePokemonPaginated = () => {
   const nextPageUrl = useRef('https://pokeapi.co/api/v2/pokemon?limit=40');
 
   const loadPokemons = async () => {
+    setIsLoading(true);
     const resp = await pokeApi.get<PokemonPaginatedResponse>(
       nextPageUrl.current,
     );
@@ -34,6 +36,7 @@ export const usePokemonPaginated = () => {
 
     if (newPokemonList.length > 0) {
       setSimplePokemonList([...simplePokemonList, ...newPokemonList]);
+      setIsLoading(false);
     }
   };
 
@@ -42,5 +45,5 @@ export const usePokemonPaginated = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { simplePokemonList };
+  return { isLoading, simplePokemonList, loadPokemons };
 };

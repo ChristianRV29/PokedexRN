@@ -13,9 +13,7 @@ type HomeScreenProps = NativeStackNavigationProp<
 >;
 
 const HomeScreen = () => {
-  const { simplePokemonList } = usePokemonPaginated();
-
-  console.log('📦🦊 ~ PokemonList: ', simplePokemonList);
+  const { simplePokemonList, loadPokemons } = usePokemonPaginated();
 
   const { top } = useSafeAreaInsets();
   return (
@@ -28,6 +26,8 @@ const HomeScreen = () => {
         data={simplePokemonList}
         keyExtractor={pokemon => pokemon.id}
         renderItem={({ item }) => <Text>{item.name}</Text>}
+        onEndReached={loadPokemons}
+        onEndReachedThreshold={0.4}
       />
     </>
   );
