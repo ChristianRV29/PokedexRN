@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Image, Text } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -25,9 +25,18 @@ const HomeScreen = () => {
       <FlatList
         data={simplePokemonList}
         keyExtractor={pokemon => pokemon.id}
-        renderItem={({ item }) => <Text>{item.name}</Text>}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <Image
+            source={{ uri: item.picture }}
+            style={{ width: 100, height: 100 }}
+          />
+        )}
         onEndReached={loadPokemons}
         onEndReachedThreshold={0.4}
+        ListFooterComponent={
+          <ActivityIndicator style={{ height: 100 }} size={20} color={'red'} />
+        }
       />
     </>
   );
