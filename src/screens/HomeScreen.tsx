@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -13,9 +13,7 @@ type HomeScreenProps = NativeStackNavigationProp<
 >;
 
 const HomeScreen = () => {
-  const { simplePokemonList } = usePokemonPaginated();
-
-  console.log('📦🦊 ~ PokemonList: ', simplePokemonList);
+  const { simplePokemonList, loadPokemons } = usePokemonPaginated();
 
   const { top } = useSafeAreaInsets();
   return (
@@ -24,7 +22,22 @@ const HomeScreen = () => {
         source={require('~src/assets/pokebola.png')}
         style={globalStyles.pokeballBG}
       />
-      <Text style={{ ...globalStyles.title, top: top + 20 }}>Pokedex</Text>
+      <FlatList
+        data={simplePokemonList}
+        keyExtractor={pokemon => pokemon.id}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <Image
+            source={{ uri: item.picture }}
+            style={{ width: 100, height: 100 }}
+          />
+        )}
+        onEndReached={loadPokemons}
+        onEndReachedThreshold={0.4}
+        ListFooterComponent={
+          <ActivityIndicator style={{ height: 100 }} size={20} color={'red'} />
+        }
+      />
     </>
   );
 };
