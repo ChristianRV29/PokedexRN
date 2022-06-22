@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '~src/navigation/StackNavigator';
 import { globalStyles } from '~src/theme/styles';
 import { usePokemonPaginated } from '~src/hooks/usePokemonPaginated';
+import { FadeInImage } from '../components/FadeInImage';
 
 type HomeScreenProps = NativeStackNavigationProp<
   RootStackParamList,
@@ -27,10 +28,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         keyExtractor={pokemon => pokemon.id}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <Image
-            source={{ uri: item.picture }}
-            style={{ width: 100, height: 100 }}
-          />
+          <FadeInImage uri={item.picture} style={{ width: 100, height: 100 }} />
         )}
         onEndReached={loadPokemons}
         onEndReachedThreshold={0.4}
