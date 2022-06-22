@@ -21,7 +21,7 @@ interface Props {
 
 export const FadeInImage = ({ uri, style = {} }: Props) => {
   const { opacity, fadeIn } = useAnimation();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const finishLoading = () => {
     setIsLoading(false);
@@ -33,7 +33,9 @@ export const FadeInImage = ({ uri, style = {} }: Props) => {
 
   return (
     <View>
-      {isLoading && <ActivityIndicator style={styles.indicator} />}
+      {isLoading && (
+        <ActivityIndicator style={styles.indicator} size={100} color={'red'} />
+      )}
       <Animated.Image
         source={{ uri }}
         onError={onError}
@@ -46,6 +48,6 @@ export const FadeInImage = ({ uri, style = {} }: Props) => {
 
 const styles = StyleSheet.create({
   indicator: {
-    position: 'relative',
+    position: 'absolute',
   },
 });
