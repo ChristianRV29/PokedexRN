@@ -12,7 +12,7 @@ type HomeScreenProps = NativeStackNavigationProp<
   'HomeScreen'
 >;
 
-const HomeScreen = () => {
+const HomeScreen: React.FC<HomeScreenProps> = () => {
   const { simplePokemonList, loadPokemons } = usePokemonPaginated();
 
   const { top } = useSafeAreaInsets();
