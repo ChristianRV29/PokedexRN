@@ -34,7 +34,7 @@ export const FadeInImage = ({ uri, style = {} }: Props) => {
   return (
     <View>
       {isLoading && (
-        <ActivityIndicator style={styles.indicator} size={100} color={'red'} />
+        <ActivityIndicator style={styles.indicator} size={20} color={'red'} />
       )}
       <Animated.Image
         source={{ uri }}

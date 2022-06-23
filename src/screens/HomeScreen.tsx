@@ -37,9 +37,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         onEndReachedThreshold={0.4}
         renderItem={({ item }) => <PokemonCard pokemon={item} />}
         showsVerticalScrollIndicator={false}
-        ListFooterComponent={
-          <ActivityIndicator style={{ height: 100 }} size={20} color={'red'} />
-        }
+        ListFooterComponent={<ActivityIndicator size={20} color={'red'} />}
       />
     </>
   );

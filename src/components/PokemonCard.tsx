@@ -5,9 +5,11 @@ import {
   TouchableOpacity,
   View,
   Text,
+  Image,
 } from 'react-native';
 
 import { SimplePokemon } from '~src/@types/interfaces/pokemon';
+import { FadeInImage } from './FadeInImage';
 
 interface Props {
   pokemon: SimplePokemon;
@@ -16,7 +18,7 @@ interface Props {
 export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
   const { width: windowWidth } = Dimensions.get('window');
 
-  const { name, id } = pokemon;
+  const { name, id, picture } = pokemon;
 
   return (
     <TouchableOpacity activeOpacity={0.8}>
@@ -27,6 +29,13 @@ export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
             {'\n#' + id}
           </Text>
         </View>
+        <View style={styles.pokeballContainer}>
+          <Image
+            source={require('../assets/pokebola-blanca.png')}
+            style={styles.pokeball}
+          />
+        </View>
+        <FadeInImage uri={picture} style={styles.pokemonImage} />
       </View>
     </TouchableOpacity>
   );
@@ -44,7 +53,30 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
-    top: 20,
     left: 10,
+    top: 20,
+  },
+  pokeballContainer: {
+    bottom: 0,
+    height: 100,
+    overflow: 'hidden',
+    position: 'absolute',
+    right: 0,
+    width: 100,
+  },
+  pokeball: {
+    bottom: -20,
+    height: 100,
+    opacity: 0.5,
+    position: 'absolute',
+    right: -20,
+    width: 100,
+  },
+  pokemonImage: {
+    height: 120,
+    position: 'absolute',
+    right: -20,
+    top: -30,
+    width: 120,
   },
 });
