@@ -1,12 +1,12 @@
 import React from 'react';
-import { ActivityIndicator, FlatList, Image, Text } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ActivityIndicator, FlatList, Image } from 'react-native';
+
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '~src/navigation/StackNavigator';
 import { globalStyles } from '~src/theme/styles';
 import { usePokemonPaginated } from '~src/hooks/usePokemonPaginated';
-import { FadeInImage } from '../components/FadeInImage';
+import { PokemonCard } from '~src/components/PokemonCard';
 
 type HomeScreenProps = NativeStackNavigationProp<
   RootStackParamList,
@@ -15,8 +15,6 @@ type HomeScreenProps = NativeStackNavigationProp<
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
   const { simplePokemonList, loadPokemons } = usePokemonPaginated();
-
-  const { top } = useSafeAreaInsets();
   return (
     <>
       <Image
@@ -25,11 +23,10 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       />
       <FlatList
         data={simplePokemonList}
+        numColumns={2}
         keyExtractor={pokemon => pokemon.id}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <FadeInImage uri={item.picture} style={{ width: 100, height: 100 }} />
-        )}
+        renderItem={({ item }) => <PokemonCard pokemon={item} />}
         onEndReached={loadPokemons}
         onEndReachedThreshold={0.4}
         ListFooterComponent={
