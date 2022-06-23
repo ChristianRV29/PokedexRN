@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, FlatList, Image } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Text } from 'react-native';
 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -15,6 +15,13 @@ type HomeScreenProps = NativeStackNavigationProp<
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
   const { simplePokemonList, loadPokemons } = usePokemonPaginated();
+
+  const showHeaderComponent = () => (
+    <Text style={{ ...globalStyles.title, ...globalStyles.globalMargin }}>
+      Pokedex
+    </Text>
+  );
+
   return (
     <>
       <Image
@@ -23,12 +30,13 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       />
       <FlatList
         data={simplePokemonList}
-        numColumns={2}
         keyExtractor={pokemon => pokemon.id}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <PokemonCard pokemon={item} />}
+        ListHeaderComponent={showHeaderComponent}
+        numColumns={2}
         onEndReached={loadPokemons}
         onEndReachedThreshold={0.4}
+        renderItem={({ item }) => <PokemonCard pokemon={item} />}
+        showsVerticalScrollIndicator={false}
         ListFooterComponent={
           <ActivityIndicator style={{ height: 100 }} size={20} color={'red'} />
         }
