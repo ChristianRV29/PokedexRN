@@ -9,10 +9,10 @@ import {
   Animated,
   NativeSyntheticEvent,
   ImageErrorEventData,
+  StyleSheet,
 } from 'react-native';
 
 import { useAnimation } from '~src/hooks/useAnimation';
-import { StyleSheet } from 'react-native';
 
 interface Props {
   uri: string;
