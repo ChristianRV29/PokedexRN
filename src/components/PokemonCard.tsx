@@ -1,5 +1,6 @@
+/* eslint-disable no-fallthrough */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -8,9 +9,9 @@ import {
   Text,
   Image,
 } from 'react-native';
+import ImageColors from 'react-native-image-colors';
 
 import { SimplePokemon } from '~src/@types/interfaces/pokemon';
-import { getImageColors } from '~src/utils/imageColors';
 import { FadeInImage } from './FadeInImage';
 
 interface Props {
@@ -18,8 +19,8 @@ interface Props {
 }
 
 interface CardProps {
-  primary?: string;
-  secondary?: string;
+  primary: string;
+  secondary: string;
 }
 
 export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
@@ -32,16 +33,24 @@ export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
   const { name, id, picture } = pokemon;
 
   useEffect(() => {
-    if (pokemon) {
-      assignPokemonCardColors();
-    }
-  }, [pokemon]);
-
-  const assignPokemonCardColors = async () => {
-    const { primary, secondary } = await getImageColors(picture);
-
-    setDefaultBGColor({ primary, secondary });
-  };
+    ImageColors.getColors(picture, { fallback: 'grey' }).then(result => {
+      switch (result.platform) {
+        case 'android':
+          setDefaultBGColor({
+            primary: result.dominant || 'grey',
+            secondary: result.average || 'grey',
+          });
+          break;
+        case 'ios':
+          setDefaultBGColor({
+            primary: result.background || 'grey',
+            secondary: result.secondary || 'grey',
+          });
+        default:
+          throw new Error('🐞 ~ Unexpected error while trying to get colors');
+      }
+    });
+  }, []);
 
   return (
     <TouchableOpacity activeOpacity={0.8}>
@@ -73,9 +82,17 @@ export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
 const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 10,
+    elevation: 8,
     height: 120,
     marginBottom: 25,
     marginHorizontal: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
   },
   name: {
     color: 'white',
