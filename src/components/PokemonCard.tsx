@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -9,17 +10,38 @@ import {
 } from 'react-native';
 
 import { SimplePokemon } from '~src/@types/interfaces/pokemon';
+import { getImageColors } from '~src/utils/imageColors';
 import { FadeInImage } from './FadeInImage';
 
 interface Props {
   pokemon: SimplePokemon;
 }
 
+interface CardProps {
+  primary?: string;
+  secondary?: string;
+}
+
 export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
   const { width: windowWidth } = Dimensions.get('window');
 
-  const [defaultBGColor, setDefaultBGColor] = useState<string>('gray');
+  const [defaultBGColor, setDefaultBGColor] = useState<CardProps>({
+    primary: 'grey',
+    secondary: '',
+  });
   const { name, id, picture } = pokemon;
+
+  useEffect(() => {
+    if (pokemon) {
+      assignPokemonCardColors();
+    }
+  }, [pokemon]);
+
+  const assignPokemonCardColors = async () => {
+    const { primary, secondary } = await getImageColors(picture);
+
+    setDefaultBGColor({ primary, secondary });
+  };
 
   return (
     <TouchableOpacity activeOpacity={0.8}>
@@ -27,7 +49,8 @@ export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
         style={{
           ...styles.cardContainer,
           width: windowWidth * 0.4,
-          backgroundColor: defaultBGColor,
+          backgroundColor: defaultBGColor.primary,
+          borderColor: defaultBGColor.secondary,
         }}>
         <View>
           <Text style={styles.name}>

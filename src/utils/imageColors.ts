@@ -8,7 +8,7 @@ interface ColorsProps {
 
 export const getImageColors = async (uri: string) => {
   const colors: ColorsProps = {};
-  const result = await ImageColors.getColors(uri, {});
+  const result = await ImageColors.getColors(uri, { fallback: 'grey' });
 
   switch (result.platform) {
     case 'android':
