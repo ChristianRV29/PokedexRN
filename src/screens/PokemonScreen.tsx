@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import { globalStyles } from '~src/theme/styles';
+import { RootStackParamList } from '~src/navigation/StackNavigator';
 
-const PokemonScreen = () => {
+type PokemonScreenProps = NativeStackNavigationProp<
+  RootStackParamList,
+  'PokemonScreen'
+>;
+
+const PokemonScreen = (props: PokemonScreenProps) => {
+  useEffect(() => {
+    console.log('🐱 ~ PokemonProps: ', props);
+  }, [props]);
+
   return (
-    <View style={globalStyles.mainContainer}>
-      <Text style={globalStyles.text}>Pokemon screen</Text>
+    <View>
+      <Text>Pokemon Screen</Text>
     </View>
   );
 };
