@@ -1,6 +1,6 @@
 /* eslint-disable no-fallthrough */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -18,36 +18,30 @@ interface Props {
   pokemon: SimplePokemon;
 }
 
-interface CardProps {
-  primary: string;
-  secondary: string;
-}
-
 export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
-  const { width: windowWidth } = Dimensions.get('window');
+  const isMounted = useRef(true);
+  const [defaultBGColor, setDefaultBGColor] = useState<string>('');
 
-  const [defaultBGColor, setDefaultBGColor] = useState<CardProps>({
-    primary: 'grey',
-    secondary: '',
-  });
+  const { width: windowWidth } = Dimensions.get('window');
   const { name, id, picture } = pokemon;
 
   useEffect(() => {
     ImageColors.getColors(picture, { fallback: 'grey' }).then(result => {
+      if (!isMounted.current) {
+        return;
+      }
+
       switch (result.platform) {
         case 'android':
-          setDefaultBGColor({
-            primary: result.dominant || 'grey',
-            secondary: result.average || 'grey',
-          });
+          setDefaultBGColor(result.dominant || 'grey');
           break;
         case 'ios':
-          setDefaultBGColor({
-            primary: result.background || 'grey',
-            secondary: result.secondary || 'grey',
-          });
+          setDefaultBGColor(result.background || 'grey');
+
         default:
-          throw new Error('🐞 ~ Unexpected error while trying to get colors');
+          throw new Error(
+            '🐞 An error has been ocurred while try to check the platform',
+          );
       }
     });
   }, []);
@@ -58,8 +52,7 @@ export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
         style={{
           ...styles.cardContainer,
           width: windowWidth * 0.4,
-          backgroundColor: defaultBGColor.primary,
-          borderColor: defaultBGColor.secondary,
+          backgroundColor: defaultBGColor,
         }}>
         <View>
           <Text style={styles.name}>
