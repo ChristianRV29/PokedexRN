@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, ScrollView, StyleSheet, Text } from 'react-native';
 
 import { PokemonDetails as Pokemon } from '~src/@types/interfaces/pokemon';
@@ -10,18 +10,14 @@ interface Props {
 export const PokemonDetails: React.FC<Props> = props => {
   const { pokemon } = props;
 
-  useEffect(() => {
-    if (pokemon) {
-      console.log('🐱 ~ PokemonData: ', pokemon);
-    }
-  }, [pokemon]);
-
   return (
     <ScrollView style={{ ...StyleSheet.absoluteFillObject }}>
       <View style={styles.container}>
         <Text style={styles.title}>Type</Text>
         <View style={styles.typesWrapper}>
-          {/* <Text>{pokemon.types[0].type}</Text> */}
+          {pokemon.types.map(({ type }) => (
+            <Text key={type.name}>{type.name}</Text>
+          ))}
         </View>
       </View>
     </ScrollView>

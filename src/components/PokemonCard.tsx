@@ -45,9 +45,7 @@ export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
           setDefaultBGColor(result.background || 'grey');
 
         default:
-          throw new Error(
-            '🐞 An error has been ocurred while try to check the platform',
-          );
+          return;
       }
     });
   }, []);
