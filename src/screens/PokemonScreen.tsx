@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { RootStackParamList } from '~src/navigation/StackNavigator';
 import { FadeInImage } from '~src/components/FadeInImage';
 import { usePokemon } from '~src/hooks/usePokemon';
+import { PokemonDetails } from '~src/components/PokemonDetails';
 
 type PokemonScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -52,7 +53,7 @@ const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
           <ActivityIndicator size="large" color={pokemonColor} />
         </View>
       ) : (
-        <Text>{pokemonDetails.name}</Text>
+        <PokemonDetails pokemon={pokemonDetails} />
       )}
     </View>
   );
