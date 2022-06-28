@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { RootStackParamList } from '~src/navigation/StackNavigator';
 import { FadeInImage } from '~src/components/FadeInImage';
+import { usePokemon } from '~src/hooks/usePokemon';
 
 type PokemonScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -15,6 +16,10 @@ type PokemonScreenProps = NativeStackScreenProps<
 const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
   const { pokemonInfo, pokemonColor } = route.params;
   const { top: topDevice } = useSafeAreaInsets();
+
+  const { pokemon: pokemonDetails } = usePokemon(pokemonInfo.id);
+
+  console.log('🐱 ~ PokemonData: ', pokemonDetails);
 
   return (
     <View>
