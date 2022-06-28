@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '~src/navigation/StackNavigator';
@@ -9,16 +9,30 @@ type PokemonScreenProps = NativeStackScreenProps<
   'PokemonScreen'
 >;
 
-const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
-  useEffect(() => {
-    console.log('🐱 ~ PokemonInfo: ', route.params.pokemonInfo);
-  }, [route]);
+const PokemonScreen = ({ route }: PokemonScreenProps) => {
+  const { pokemonInfo, pokemonColor } = route.params;
 
   return (
     <View>
-      <Text>Pokemon Screen</Text>
+      <View
+        style={{
+          ...styles.headerContainer,
+          backgroundColor: pokemonColor,
+        }}>
+        <Text>{pokemonInfo.name}</Text>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  headerContainer: {
+    alignItems: 'center',
+    borderBottomLeftRadius: 1000,
+    borderBottomRightRadius: 1000,
+    height: 370,
+    zIndex: 999,
+  },
+});
 
 export default PokemonScreen;
