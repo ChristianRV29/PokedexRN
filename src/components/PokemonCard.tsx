@@ -14,6 +14,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { SimplePokemon } from '~src/@types/interfaces/pokemon';
 import { FadeInImage } from './FadeInImage';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '~src/navigation/StackNavigator';
 
 interface Props {
   pokemon: SimplePokemon;
@@ -23,7 +25,8 @@ export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
   const isMounted = useRef(true);
   const [defaultBGColor, setDefaultBGColor] = useState<string>('');
 
-  const { navigate } = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const { width: windowWidth } = Dimensions.get('window');
   const { name, id, picture } = pokemon;
@@ -50,7 +53,7 @@ export const PokemonCard: React.FC<Props> = ({ pokemon }) => {
   }, []);
 
   const onPressCard = () =>
-    navigate('PokemonScreen', {
+    navigation.navigate('PokemonScreen', {
       pokemonInfo: pokemon,
       pokemonColor: defaultBGColor,
     });
