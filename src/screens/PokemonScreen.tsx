@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -12,7 +12,7 @@ type PokemonScreenProps = NativeStackScreenProps<
 >;
 
 const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
-  const { pokemonColor } = route.params;
+  const { pokemonInfo, pokemonColor } = route.params;
   const { top: topDevice } = useSafeAreaInsets();
 
   return (
@@ -27,6 +27,9 @@ const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
           onPress={() => navigation.pop()}>
           <Icon name="arrow-back-outline" color="white" size={30} />
         </TouchableOpacity>
+        <Text style={{ ...styles.pokemonName, top: topDevice + 40 }}>
+          {pokemonInfo.name}
+        </Text>
       </View>
     </View>
   );
@@ -41,8 +44,14 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   backButton: {
-    position: 'absolute',
     left: 20,
+    position: 'absolute',
+  },
+  pokemonName: {
+    alignSelf: 'flex-start',
+    color: 'white',
+    left: 20,
+    fontSize: 40,
   },
 });
 
