@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from '~src/navigation/StackNavigator';
 
-type PokemonScreenProps = NativeStackNavigationProp<
+type PokemonScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'PokemonScreen'
 >;
 
-const PokemonScreen = (props: PokemonScreenProps) => {
+const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
   useEffect(() => {
-    console.log('🐱 ~ PokemonProps: ', props);
-  }, [props]);
+    console.log('🐱 ~ PokemonInfo: ', route.params.pokemonInfo);
+  }, [route]);
 
   return (
     <View>
