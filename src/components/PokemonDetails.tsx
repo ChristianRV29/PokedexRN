@@ -65,7 +65,7 @@ export const PokemonDetails: React.FC<Props> = props => {
               <Text style={{ ...styles.statText, ...styles.typeText }}>
                 {it.stat.name}
               </Text>
-              <Text style={{ fontWeight: 'bold' }}>{it.base_stat}</Text>
+              <Text style={styles.baseStatText}>{it.base_stat}</Text>
             </View>
           ))}
         </View>
@@ -114,5 +114,8 @@ const styles = StyleSheet.create({
   bottomImage: {
     height: 100,
     width: 100,
+  },
+  baseStatText: {
+    fontWeight: 'bold',
   },
 });
