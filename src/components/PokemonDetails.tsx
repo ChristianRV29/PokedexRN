@@ -51,16 +51,29 @@ export const PokemonDetails: React.FC<Props> = props => {
           ))}
         </View>
         <Text style={styles.title}>Movements</Text>
-        <View
-          style={{
-            ...styles.typesWrapper,
-            flexWrap: 'wrap',
-          }}>
+        <View style={styles.movementsWrapper}>
           {pokemon.moves.map(({ move }) => (
             <Text style={styles.typeText} key={move.name}>
               {move.name}
             </Text>
           ))}
+        </View>
+        <Text style={styles.title}>Stats</Text>
+        <View>
+          {pokemon.stats.map((it, index: number) => (
+            <View key={it.stat.name + index} style={styles.movementsWrapper}>
+              <Text style={{ ...styles.statText, ...styles.typeText }}>
+                {it.stat.name}
+              </Text>
+              <Text style={{ fontWeight: 'bold' }}>{it.base_stat}</Text>
+            </View>
+          ))}
+        </View>
+        <View style={styles.bottomImageWrapper}>
+          <FadeInImage
+            uri={pokemon.sprites.front_default}
+            style={styles.bottomImage}
+          />
         </View>
       </View>
     </ScrollView>
@@ -86,5 +99,20 @@ const styles = StyleSheet.create({
   sprite: {
     width: 100,
     height: 100,
+  },
+  movementsWrapper: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  statText: {
+    width: 150,
+  },
+  bottomImageWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bottomImage: {
+    height: 100,
+    width: 100,
   },
 });
