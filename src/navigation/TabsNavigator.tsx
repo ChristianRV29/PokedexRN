@@ -14,15 +14,14 @@ const TabsNavigator = () => {
         headerShown: false,
         tabBarActiveTintColor: '#5856D5',
         tabBarStyle: {
-          backgroundColor: 'rgba (255, 255, 255, 0.92)',
+          backgroundColor: 'rgba(255, 255, 255, 0.98)',
           borderWidth: 0,
           elevation: 0,
           height: 60,
           paddingBottom: 10,
           position: 'absolute',
         },
-      }}
-      sceneContainerStyle={{ backgroundColor: 'white' }}>
+      }}>
       <Tab.Screen
         name="StackNavigator"
         component={StackNavigator}
