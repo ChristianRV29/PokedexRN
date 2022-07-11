@@ -23,6 +23,7 @@ export const SearchInput = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
+    marginHorizontal: 20,
   },
   inputWrapper: {
     alignItems: 'center',
