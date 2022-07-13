@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   ActivityIndicator,
@@ -6,8 +7,10 @@ import {
   StyleSheet,
   Text,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Loading } from '~src/components/Loading';
 import { PokemonCard } from '~src/components/PokemonCard';
 
 import { SearchInput } from '~src/components/SearchInput';
@@ -15,6 +18,7 @@ import { usePokemonSearch } from '~src/hooks/usePokemonSearch';
 import { globalStyles } from '~src/theme/styles';
 
 const SearchScreen = () => {
+  const screenWidth = Dimensions.get('window').width;
   const { top } = useSafeAreaInsets();
 
   const { isFetching, simplePokemonList } = usePokemonSearch();
@@ -24,27 +28,25 @@ const SearchScreen = () => {
       style={{
         ...globalStyles.title,
         ...globalStyles.globalMargin,
-        ...styles.searchText,
+        marginTop: Platform.OS === 'ios' ? 100 : 60,
       }}>
       Pokedex
     </Text>
   );
 
   if (isFetching) {
-    return (
-      <View style={styles.activityWrapper}>
-        <ActivityIndicator size={50} color="grey" />
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <Loading />;
   }
 
   return (
-    <View
-      style={{
-        marginTop: Platform.OS === 'ios' ? top : top + 10,
-      }}>
-      <SearchInput />
+    <View>
+      <SearchInput
+        style={{
+          ...styles.searchInput,
+          width: screenWidth - 40,
+          top: Platform.OS === 'ios' ? top : top + 10,
+        }}
+      />
       <FlatList
         data={simplePokemonList}
         keyExtractor={pokemon => pokemon.id}
@@ -60,17 +62,13 @@ const SearchScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  activityWrapper: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
+  searchInput: {
+    position: 'absolute',
+    zIndex: 99,
   },
   searchWrapper: {
     flex: 1,
     marginHorizontal: 20,
-  },
-  searchText: {
-    marginTop: 15,
   },
 });
 

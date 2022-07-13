@@ -1,11 +1,22 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { Platform, StyleSheet, TextInput, View } from 'react-native';
+import {
+  Platform,
+  StyleProp,
+  StyleSheet,
+  TextInput,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export const SearchInput = () => {
+interface SearchInputProps {
+  style?: StyleProp<ViewStyle>;
+}
+
+export const SearchInput = ({ style }: SearchInputProps) => {
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...(style as any) }}>
       <View style={styles.inputWrapper}>
         <TextInput
           autoCapitalize="none"
