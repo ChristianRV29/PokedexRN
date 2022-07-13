@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Platform,
   StyleProp,
@@ -15,6 +15,8 @@ interface SearchInputProps {
 }
 
 export const SearchInput = ({ style }: SearchInputProps) => {
+  const [inputValue, setInputValue] = useState<string>('');
+
   return (
     <View style={{ ...styles.container, ...(style as any) }}>
       <View style={styles.inputWrapper}>
@@ -24,6 +26,8 @@ export const SearchInput = ({ style }: SearchInputProps) => {
           placeholder="Search pokemon"
           placeholderTextColor="grey"
           style={{ ...styles.textInput, top: Platform.OS === 'ios' ? 0 : 2 }}
+          value={inputValue}
+          onChangeText={e => setInputValue(e)}
         />
         <Icon name="search-outline" size={30} color="grey" />
       </View>
