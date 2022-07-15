@@ -28,6 +28,10 @@ const SearchScreen = () => {
   const [term, setTerm] = useState<string>('');
 
   useEffect(() => {
+    if (term.length === 0) {
+      setPokemonFiltered([]);
+    }
+
     setPokemonFiltered(
       simplePokemonList.filter(({ name }) =>
         name.toLocaleLowerCase().includes(term.toLocaleLowerCase()),
