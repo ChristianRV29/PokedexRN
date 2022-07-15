@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Platform,
   StyleProp,
@@ -9,13 +10,21 @@ import {
   ViewStyle,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useDebouncedValue } from '~src/hooks/useDebounceValue';
 
 interface SearchInputProps {
   style?: StyleProp<ViewStyle>;
+  onTermChange: (value: string) => void;
 }
 
-export const SearchInput = ({ style }: SearchInputProps) => {
+export const SearchInput = ({ style, onTermChange }: SearchInputProps) => {
   const [inputValue, setInputValue] = useState<string>('');
+
+  const devouncedValue = useDebouncedValue(inputValue);
+
+  useEffect(() => {
+    onTermChange(devouncedValue);
+  }, [devouncedValue]);
 
   return (
     <View style={{ ...styles.container, ...(style as any) }}>

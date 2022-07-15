@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Platform,
@@ -10,6 +11,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SimplePokemon } from '~src/@types/interfaces/pokemon';
 import { Loading } from '~src/components/Loading';
 import { PokemonCard } from '~src/components/PokemonCard';
 
@@ -23,6 +25,17 @@ const SearchScreen = () => {
 
   const { isFetching, simplePokemonList } = usePokemonSearch();
 
+  const [pokemonFiltered, setPokemonFiltered] = useState([] as SimplePokemon[]);
+  const [term, setTerm] = useState<string>('');
+
+  useEffect(() => {
+    setPokemonFiltered(
+      simplePokemonList.filter(({ name }) =>
+        name.toLocaleLowerCase().includes(term.toLocaleLowerCase()),
+      ),
+    );
+  }, [term]);
+
   const showHeaderComponent = () => (
     <Text
       style={{
@@ -30,7 +43,7 @@ const SearchScreen = () => {
         ...globalStyles.globalMargin,
         marginTop: Platform.OS === 'ios' ? 100 : 60,
       }}>
-      Pokedex
+      {term}
     </Text>
   );
 
@@ -41,6 +54,7 @@ const SearchScreen = () => {
   return (
     <View>
       <SearchInput
+        onTermChange={setTerm}
         style={{
           ...styles.searchInput,
           width: screenWidth - 40,
@@ -48,14 +62,13 @@ const SearchScreen = () => {
         }}
       />
       <FlatList
-        data={simplePokemonList}
+        data={pokemonFiltered}
         keyExtractor={pokemon => pokemon.id}
         ListHeaderComponent={showHeaderComponent}
         numColumns={2}
         onEndReachedThreshold={0.4}
         renderItem={({ item }) => <PokemonCard pokemon={item} />}
         showsVerticalScrollIndicator={false}
-        ListFooterComponent={<ActivityIndicator size={20} color={'grey'} />}
       />
     </View>
   );
